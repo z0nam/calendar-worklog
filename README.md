@@ -32,7 +32,9 @@ monday MCP가 양쪽 다 정식 지원되어 기능 격차는 거의 없습니�
 | Codex / Claude Code / Cursor | 10분 (mcp.json 편집) | 코드 사용자 |
 | Gemini Gems | 보조 |  |
 
-각 트랙별 셋업은 `presets/` 디렉토리 참조.
+각 트랙별 셋업은 `presets/` 디렉토리 참조. 어느 트랙을 고를지는
+[docs/decision-tree.md](./docs/decision-tree.md), 능력 비교는
+[docs/feature-matrix.md](./docs/feature-matrix.md) 참조.
 
 ## 구조
 
@@ -45,7 +47,11 @@ calendar-worklog/
 ├── presets/
 │   ├── claude-projects/           # Claude Projects 셋업 가이드
 │   ├── chatgpt-gpts/              # ChatGPT (Developer Mode + MCP) 셋업 가이드
-│   └── codex/                     # Codex CLI (config.toml + AGENTS.md) 셋업 가이드
+│   ├── codex/                     # Codex CLI (config.toml + AGENTS.md) 셋업 가이드
+│   └── claude-code/               # Claude Code (CLAUDE.md + MCP) 셋업 가이드
+├── docs/
+│   ├── feature-matrix.md          # 트랙별 기능 비교표
+│   └── decision-tree.md           # "나는 어느 트랙으로?" 1페이지 가이드
 └── examples/                      # (예정)
 ```
 
