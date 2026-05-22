@@ -44,7 +44,7 @@ calendar-worklog/
 │   └── user-config.example.yaml   # 사용자 설정 템플릿
 ├── presets/
 │   ├── claude-projects/           # Claude Projects 셋업 가이드
-│   ├── chatgpt-gpts/              # (예정)
+│   ├── chatgpt-gpts/              # ChatGPT (Developer Mode + MCP) 셋업 가이드
 │   └── codex/                     # (예정)
 └── examples/                      # (예정)
 ```
