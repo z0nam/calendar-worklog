@@ -1,0 +1,17 @@
+# 실제 사용자 설정 (개인정보: 캘린더 ID, slack/monday ID 등) — 절대 커밋 금지
+# 커밋되는 건 user-config.example.yaml 뿐.
+user-config.yaml
+**/user-config.yaml
+*.local.yaml
+
+# 캘린더/슬랙/monday 등에서 내려받은 실데이터·검증 산출물
+/scratch/
+/.tmp/
+
+# macOS
+.DS_Store
+
+# 에디터
+.vscode/
+.idea/
+*.swp

@@ -88,6 +88,21 @@ data_sources:
     enabled: true
     # 본인 AI 사용 패턴: 업무 시간에 어떤 AI를 주로 쓰는지
 
+# 민감도(보안) 설정 — blacklist 모델
+# 회사 연구는 기본 공개 가능. 보안 필요한 과업만 제목에 키워드로 명시·관리됨.
+# 캘린더는 공개 노출(published)되므로, 아래 키워드가 제목/과제명에 있으면
+# 캘린더에는 세부 내용 없이 일반화된 제목만 기재한다.
+sensitivity:
+  # 활동 출처(monday item명 / 일정 제목 / 과제명)에 이 중 하나라도 포함되면 민감으로 간주
+  title_keywords:
+    - "[보안]"
+    - "대외비"
+    - "비공개"
+  # 민감 과업을 캘린더에 박을 때 쓸 일반화 제목 (description은 비움)
+  generic_title: "[과제] 내부 검토"
+  # 링크는 OAuth로 접근 통제되므로 민감 과업이라도 남겨도 무방 (열람 권한자만 접근 가능)
+  keep_links_even_if_sensitive: true
+
 # 이벤트 생성 정책
 event_policy:
   unit_min_minutes: 30
