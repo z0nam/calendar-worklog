@@ -1,0 +1,28 @@
+# Codex CLI MCP 설정 예시 — calendar-worklog
+#
+# 배치 위치:
+#   - 전역: ~/.codex/config.toml
+#   - 프로젝트: <repo>/.codex/config.toml   (trusted project만)
+# 아래 [mcp_servers.*] 블록을 본인 config.toml에 병합하세요.
+#
+# 주의: 패키지명 <...> / URL / 토큰은 모두 예시 placeholder입니다.
+#       실제 값은 각 MCP 서버 공식 문서에서 확인하고 채우세요. 예시값 그대로 쓰지 말 것.
+
+# --- Google Calendar (이벤트 읽기/쓰기) ---
+[mcp_servers.google_calendar]
+command = "npx"
+args = ["-y", "<google-calendar-mcp-package>"]   # 실제 패키지명은 공식 문서 확인
+env_vars = ["GOOGLE_OAUTH_CREDENTIALS"]           # OAuth 자격증명 전달 (서버 문서에 맞춤)
+default_tools_approval_mode = "prompt"            # 쓰기 작업 확인 권장
+
+# --- Slack (본인 메시지 검색) ---
+[mcp_servers.slack]
+command = "npx"
+args = ["-y", "<slack-mcp-package>"]
+env_vars = ["SLACK_MCP_TOKEN"]
+
+# --- monday.com (보드 활동 / Time Tracking) ---
+# monday는 원격(hosted) MCP를 제공합니다. config 직접 편집 대신 CLI 등록 권장:
+#   codex mcp add monday --url "<monday-공식-MCP-URL>"
+# URL/인증은 monday 공식 문서·Admin에서 확인 (임의 입력 금지).
+# 회사 어드민이 AI 커넥터를 허용해 둬야 동작합니다.

@@ -45,7 +45,7 @@ calendar-worklog/
 ├── presets/
 │   ├── claude-projects/           # Claude Projects 셋업 가이드
 │   ├── chatgpt-gpts/              # ChatGPT (Developer Mode + MCP) 셋업 가이드
-│   └── codex/                     # (예정)
+│   └── codex/                     # Codex CLI (config.toml + AGENTS.md) 셋업 가이드
 └── examples/                      # (예정)
 ```
 
