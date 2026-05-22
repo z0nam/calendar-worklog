@@ -1,0 +1,112 @@
+# calendar-worklog: 사용자 설정 템플릿
+#
+# 사용법:
+# 1. 이 파일을 user-config.yaml 로 복사 (.gitignore에 등록되어 있음)
+# 2. 본인 정보로 채움
+# 3. AI Project/GPT의 Knowledge에 prompt.md와 함께 업로드
+#    또는 채팅 시작 시 prompt.md와 함께 복붙
+#
+# YAML 주석은 # 로 시작합니다.
+
+user:
+  name: 홍길동
+  # Slack workspace에서의 본인 user_id (검색 시 from:<@...>에 들어감)
+  # 본인 Slack 프로필 → "Copy member ID"
+  slack_user_id: U00000000000
+  timezone: Asia/Seoul
+
+work_hours:
+  # 가장 간단한 케이스: default 한 줄
+  default:
+    start: "09:00"
+    end: "18:00"
+
+  # 요일별로 다른 경우 weekly 사용 (있으면 default 무시됨)
+  # weekly:
+  #   mon: { start: "08:00", end: "18:00" }
+  #   tue: { start: "08:00", end: "18:00" }
+  #   wed: { start: "08:00", end: "18:00" }
+  #   thu: { start: "08:00", end: "18:00" }
+  #   fri: { start: "08:00", end: "14:00" }  # 금요일 조기 퇴근
+
+# 근태 규칙
+attendance_rules:
+  late_arrival:
+    # 트리거 패턴 (정규식 또는 키워드)
+    triggers: ["지참", "치참", "지각"]
+    title_template: "지참 {HHMM}"
+    # 시작 시각은 항상 정규 출근 시각 (work_hours.start)
+    # 종료 시각은 실제 도착 시각
+    start_from: work_hours.start
+    end_from: arrival_time
+    calendar: 근태
+
+  # 추후 추가 가능:
+  # early_leave:
+  #   triggers: ["조퇴", "일찍 퇴근"]
+  #   ...
+
+# 회사가 운영하는 캘린더 분류 체계
+# 회사마다 다름. JRI는 4개 캘린더 + priority 순위
+calendars:
+  과제:
+    id: "c_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@group.calendar.google.com"
+    priority: 1
+    description: "특정 연구과제명/산출물 (수행계획서, 보고서 등)"
+  근태:
+    id: "c_yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy@group.calendar.google.com"
+    priority: 2
+    description: "출근/지참/조퇴/연가/외출"
+  업무:
+    id: "c_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz@group.calendar.google.com"
+    priority: 3
+    description: "일반 공적 업무, 회의 후속, 실무 응대, IT 관리"
+  기타:
+    id: "c_wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww@group.calendar.google.com"
+    priority: 4
+    description: "분류 애매한 공식 일정 (학교 연락, 외부 모임, 스터디)"
+
+# 활동 데이터 소스
+data_sources:
+  slack:
+    enabled: true
+    # 검색 syntax 호환성 메모:
+    # - Claude/ChatGPT의 Slack connector: from:<@U...> on:YYYY-MM-DD 패턴 OK
+    workspace_hint: "회사 워크스페이스 이름"
+
+  monday:
+    enabled: true
+    # 자주 보는 보드 ID (activity 우선 조회 대상)
+    # monday 보드 URL의 /boards/ 뒤 숫자
+    favorite_boards:
+      - id: 0000000000
+        name: "진행업무보드"
+      - id: 0000000001
+        name: "진행과제보드"
+
+  ai_session_search:
+    enabled: true
+    # 본인 AI 사용 패턴: 업무 시간에 어떤 AI를 주로 쓰는지
+
+# 이벤트 생성 정책
+event_policy:
+  unit_min_minutes: 30
+  unit_max_minutes: 60
+  color_id: keep_default  # "1"~"11" 지정 가능, keep_default 권장
+  description_style: bullet_with_source
+  # 다음 카테고리는 캘린더에 등록하지 않음
+  exclude_categories:
+    - 점심
+    - 이동
+    - 휴식
+    - 개인사
+  # 업무 시간 외 활동 등록 정책
+  outside_work_hours:
+    auto_register: false  # 자동 등록 안 함
+    confirm_with_user: true  # 사용자에게 확인 후 등록
+
+# 보고 양식
+reporting:
+  format: markdown_table
+  columns: [시간, 활동, 캘린더, 상태]
+  include_notes: true  # 추정 / 애매한 배정 등 메모 포함
