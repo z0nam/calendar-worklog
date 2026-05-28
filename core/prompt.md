@@ -255,9 +255,12 @@
   - monday: 3개 보드(진행업무/진행과제/전체 과제리스트) 모두 접근 가능 ✅
   - Slack: 공개 채널 `from:` 검색 가능 ✅ (현재 본인 계정)
   - 캘린더: 본인 4종 ✅ / **타 구성원 캘린더는 서비스계정 경유 필요** ⚠
+- **다인 캘린더 접근 = 서비스계정 직접 조회로 확정 (2026-05-28)**: ji-calendar-bot 서비스계정
+  + Domain-wide Delegation으로 `calendar@ji.re.kr`를 임퍼소네이트해 전 구성원 캘린더를 직접 조회
+  (별도 ACL 공유 불필요, ji-calendar-provision viewer와 동일 모델). 보고 코드는 MCP 캘린더가
+  아니라 이 백엔드를 호출.
 - **열린 설계 항목 (다음 작업, Phase 2 코드 = Codex)**:
-  - 다인 캘린더 접근 경로 확정: **(A) 서비스계정(ji-calendar-bot) 직접 조회** vs
-    **(B) `share_standard_calendars.py`로 보고 계정에 대상 구성원 캘린더 read 공유**
+  - 보고 코드에서 ji-calendar-bot 서비스계정 호출 연동 (MCP 미경유 경로)
   - 런칭용 Slack 봇 계정 생성 + 공개 채널 한정 권한
   - `organization` 명부 확정 (org_groups.json 재사용 vs monday 소속/담당자 파생)
 
