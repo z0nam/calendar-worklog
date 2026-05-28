@@ -109,17 +109,26 @@ data_sources:
 # 조직 명부 — 워크플로 5(주간 과제 보고, 원장 보고용)에서 실(室) → 구성원 집계에 사용
 organization:
   # 명부 출처:
-  #   org_groups : ji-calendar-provision config/org_groups.json 재사용 (groups=실, people=구성원)
-  #   monday     : '전체 과제리스트'의 소속 컬럼(실) + 담당자/PM(구성원)에서 파생
+  #   monday     : 전용 명부 보드(연구자별 소속실 매핑)에서 동적 조회 (권장 — 항상 최신)
+  #   org_groups : ji-calendar-provision config/org_groups.json 재사용
   #   inline     : 아래 divisions에 직접 기재
   source: monday
+  monday_roster:
+    board_id: 0000000000                    # 연구자 소속 마스터 보드 ID
+    division_column: dropdown_xxxxxxxx       # 소속(다중) 드롭다운
+    role_column: dropdown_xxxxxxxx           # 역할 (부서장/PM/연구원 등)
+    head_status_column: color_xxxxxxxx       # 부서장 표시 status
+    person_column: multiple_person_xxxxxxxx  # monday 계정 매칭 (미가입자는 null)
+  # 보고 대상 실 (없으면 전체)
+  target_divisions:
+    - OO연구실
+  heads:
+    OO연구실: 실장이름
   # source: inline 일 때만 사용
-  divisions:
-    - name: 도민행복연구실
-      members:
-        - { name: 홍길동, email: hong@example.re.kr, slack_user_id: U00000000000, monday_user_id: 00000000 }
-    # - name: 지속성장연구실
-    #   members: [ ... ]
+  # divisions:
+  #   - name: OO연구실
+  #     members:
+  #       - { name: 홍길동, email: hong@example.re.kr, slack_user_id: U0000, monday_user_id: 0 }
 
 # 민감도(보안) 설정 — blacklist 모델
 # 회사 연구는 기본 공개 가능. 보안 필요한 과업만 제목에 키워드로 명시·관리됨.
