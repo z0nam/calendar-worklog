@@ -41,6 +41,15 @@ attendance_rules:
     end_from: arrival_time
     calendar: 근태
 
+  full_day_absence:
+    # 전일근태도 all-day 이벤트가 아니라 본인 출퇴근 시간 기준 시간 지정 이벤트로 등록
+    triggers: ["연가", "휴가", "공가", "병가"]
+    title_template: "{TYPE}"
+    start_from: work_hours.start
+    end_from: work_hours.end
+    calendar: 근태
+    all_day: false
+
   # 추후 추가 가능:
   # early_leave:
   #   triggers: ["조퇴", "일찍 퇴근"]
@@ -73,6 +82,15 @@ data_sources:
     # 검색 syntax 호환성 메모:
     # - Claude/ChatGPT의 Slack connector: from:<@U...> on:YYYY-MM-DD 패턴 OK
     workspace_hint: "회사 워크스페이스 이름"
+    scope: public_only     # 공개 채널만 조회 (DM/비공개 제외)
+    account: user          # user(현재 본인 계정) | bot(런칭 시 전용 봇 계정)
+
+  calendar:
+    # 본인 캘린더는 개인 OAuth로 조회.
+    # 워크플로 5(주간 과제 보고)에서 타 구성원 캘린더가 필요하면 개인 OAuth로는 안 보이므로
+    # ji-calendar-provision 방식으로 접근: 서비스계정 + Domain-wide Delegation,
+    # calendar@ji.re.kr 임퍼소네이트. 각 구성원은 [과제]/[업무]/[근태]/[기타] {이름} 캘린더 소유.
+    member_access: service_account   # service_account | per_user_share | none
 
   monday:
     enabled: true
@@ -87,6 +105,21 @@ data_sources:
   ai_session_search:
     enabled: true
     # 본인 AI 사용 패턴: 업무 시간에 어떤 AI를 주로 쓰는지
+
+# 조직 명부 — 워크플로 5(주간 과제 보고, 원장 보고용)에서 실(室) → 구성원 집계에 사용
+organization:
+  # 명부 출처:
+  #   org_groups : ji-calendar-provision config/org_groups.json 재사용 (groups=실, people=구성원)
+  #   monday     : '전체 과제리스트'의 소속 컬럼(실) + 담당자/PM(구성원)에서 파생
+  #   inline     : 아래 divisions에 직접 기재
+  source: monday
+  # source: inline 일 때만 사용
+  divisions:
+    - name: 도민행복연구실
+      members:
+        - { name: 홍길동, email: hong@example.re.kr, slack_user_id: U00000000000, monday_user_id: 00000000 }
+    # - name: 지속성장연구실
+    #   members: [ ... ]
 
 # 민감도(보안) 설정 — blacklist 모델
 # 회사 연구는 기본 공개 가능. 보안 필요한 과업만 제목에 키워드로 명시·관리됨.
