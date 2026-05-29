@@ -6,6 +6,18 @@ calendar-worklog의 핵심 업무를 실제로 수행할 수 있는지 검증하
 > **갱신(2026-05-29):** Codex 트랙은 별도로 end-to-end 검증을 마쳤다(→ `docs/openai-solution-review.md`).
 > 따라서 본 시나리오는 주로 **ChatGPT Free / Plus / Business 가용성 확정**용으로 쓴다.
 
+## 검증 결과 (2026-05-29) — ChatGPT Free: 불가 확정
+
+동일 기계 A/B 테스트(무료 `test@ji.re.kr` vs Plus 계정)에서 **무료 계정은 Google Calendar
+커넥터 자체가 없음**을 확인했다. 따라서 무료에서는 시나리오 1·2·3을 **실행 불가**(쓰기는커녕
+Calendar 연결 단계에서 막힘).
+
+- 무료 `설정 → 앱`: 연결 가능한 커넥터 목록이 없음("앱 탐색" 버튼만). Google Calendar 없음.
+- 무료 앱 디렉터리(`chatgpt.com/apps?q=calendar`): Outlook 캘린더·Quick Calendar·Reclaim.ai만, **Google Calendar 없음**.
+- Plus 계정(동일 기계): 같은 디렉터리/설정에 Google Calendar(✓ 연결)·Slack·monday 표시됨.
+
+→ **ChatGPT 트랙은 Plus+ 전제.** 무료는 배선 단계에서 탈락. 이하 시나리오는 Plus/Business 검증용으로 남긴다.
+
 ## 공통 테스트 환경
 
 - 테스트 Google 계정 1개
@@ -194,10 +206,8 @@ Business/Enterprise/Edu:
 
 | 날짜 | 계정/플랜 | 시나리오 | 결과 | 막힌 지점 | 메모 |
 |---|---|---|---|---|---|
-| 2026-05-__ | Free | 1-A |  |  |  |
-| 2026-05-__ | Free | 1-B |  |  |  |
-| 2026-05-__ | Free | 2 |  |  |  |
-| 2026-05-__ | Free | 3 |  |  |  |
+| 2026-05-29 | Free (조테스트) | 1·2·3 | 실패(실행 불가) | Calendar 연결 단계 | 무료엔 Google Calendar 커넥터 없음. 앱 디렉터리·설정→앱 모두 부재 |
+| 2026-05-29 | Plus | (대조) | — | — | 동일 기계에서 Google Calendar/Slack/monday 표시·연결됨 (Codex 트랙은 별도 검증 완료) |
 | 2026-05-__ | Plus | 1-A |  |  |  |
 | 2026-05-__ | Plus | 2 |  |  |  |
 | 2026-05-__ | Plus | 3 |  |  |  |

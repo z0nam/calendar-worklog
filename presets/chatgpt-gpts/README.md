@@ -7,22 +7,26 @@ ChatGPT에서 calendar-worklog를 돌리는 방법입니다.
 > Gmail/Outlook, Slack, monday.com 같은 공식 Apps를 연결하는 경로를 검증합니다.
 > Custom MCP / Developer Mode는 조직 관리자 또는 개발자가 별도 배포할 때 쓰는 고급 경로로 봅니다.
 
-## 사전 조건 (플랜 요건 — 검증 중)
+## 사전 조건 (플랜 요건 — 2026-05-29 확정: **Plus+ 필요**)
 
 ChatGPT에는 크게 두 경로가 있습니다.
 
 | 메커니즘 | 무료 플랜 | 비고 |
 |---|---|---|
-| **공식 Apps** (Google Calendar, Gmail/Outlook, Slack, monday.com 등) | 일부 가능하나 제한적 (실관찰과 충돌) | 앱별/지역별/플랜별로 Connect 버튼이 비활성화될 수 있음. 공식 Slack app **문서는 paid plan을 요구**하나, **무료 계정에서 Slack 읽기가 된 실관찰**이 있어 충돌 → 샌드박스 테스트로 확정 |
+| **공식 Apps** (Google Calendar, Gmail/Outlook, Slack, monday.com 등) | ❌ **불가 (확정)** | 무료엔 **Google Calendar 커넥터 자체가 없음**(설정→앱·앱 디렉터리 모두 부재). Plus+부터 Google Calendar/Slack/monday 연결 가능 |
 | **Custom MCP / Developer Mode** | 무료 주 경로 아님 | full MCP 및 write action 배포는 Business/Enterprise/Edu 중심. Pro는 read/fetch MCP 가능성이 있으나 write까지는 제한적 |
 
-> **현재 판단:** 무료 계정은 배선 가능성 확인용입니다. 실제 업무일지 end-to-end 검증은
-> Plus 이상에서 먼저 하고, 조직 배포는 Business/Enterprise/Edu의 Apps 관리·Action control을 검토합니다.
+> **확정(2026-05-29 A/B 테스트):** 동일 기계에서 무료 vs Plus 계정을 비교한 결과, 무료엔
+> Google Calendar 커넥터가 없어 캘린더 쓰기가 불가능 → **worklog 핵심 기능을 무료로는 못 돌린다.**
+> 개인은 Plus 이상, 조직 배포는 Business/Enterprise/Edu의 Apps 관리·Action control을 검토.
 
 - monday를 쓰는 경우, 회사 어드민이 AI/MCP 커넥터 접근을 허용해 둬야 함
   (monday Admin → Permissions → AI Connectors 또는 ChatGPT workspace Apps 설정)
 
-### 무료 플랜 샌드박스 테스트 (확정용 체크리스트)
+### 무료 플랜 샌드박스 테스트 (2026-05-29 완료 — 결과: 무료 불가)
+
+> **결과:** 무료 계정은 첫 항목(Google Calendar 커넥터 존재)에서 탈락. 아래 체크리스트는
+> Plus/Business 검증이나 향후 재확인 시 절차로 참고.
 
 **권장 격리 방식**: 임시 회사 Google 계정 하나 생성(어드민이면 쉬움) → 그 계정으로
 무료 ChatGPT 로그인 + 자체 테스트 캘린더 사용. 계정·데이터가 한 번에 격리되어
@@ -34,16 +38,16 @@ production(공개) 캘린더를 오염시키지 않음. Docker 불필요. 단 �
 
 무료 GPT 계정 하나로 다음을 순서대로 확인:
 
-- [ ] `Settings → Apps`에 **Google Calendar / Gmail 또는 Outlook / Slack / monday.com**이 보이는가
-- [ ] 각 App의 **Connect 버튼**이 활성화되는가
-- [ ] Slack **읽기**(메시지 검색)가 되는가  ← 무료에서 됐다는 실관찰 있음, 재확인
+- [x] `Settings → Apps`에 **Google Calendar / Slack / monday.com**이 보이는가 → **무료: ❌ 없음** (Plus: ✅)
+- [ ] 각 App의 **Connect 버튼**이 활성화되는가 → 무료는 위에서 이미 탈락
+- [ ] Slack **읽기**(메시지 검색)가 되는가
 - [ ] Google Calendar **읽기**(일정 조회)가 되는가
 - [ ] Google Calendar **쓰기**(이벤트 생성)가 되는가  ← 핵심. 읽기만 되고 쓰기는 막힐 수 있음
 - [ ] monday를 **공식 App 또는 조직이 허용한 custom App/MCP**로 연결할 수 있는가
 - [ ] 위가 되면 `지참 0835` / `어제 정리`까지 end-to-end 동작하는가
 
-결과에 따라 위 표의 "무료 플랜" 칸을 사실로 확정하고, 메인 README의 트랙별
-플랜 요건도 갱신한다.
+**확정 결과(2026-05-29)**: 무료 플랜 = **불가**. feature-matrix·메인 README의 ChatGPT 플랜
+요건을 Plus+로 갱신 완료.
 
 ## 1단계: `user-config.yaml` 준비
 
