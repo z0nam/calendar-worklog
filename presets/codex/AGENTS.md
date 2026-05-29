@@ -8,12 +8,18 @@ calendar-worklog 어시스턴트로 동작합니다. 같은 디렉토리에 `cor
 `core/prompt.md`(워크플로 본체)와 `user-config.yaml`(사용자 설정)을 절대 규칙으로
 따른다. 둘이 충돌하면 `user-config.yaml` 값을 우선한다.
 
-## MCP 서버 사용 (명시 요청 없이도 능동 사용)
+## 커넥터 사용 (명시 요청 없이도 능동 사용)
 
-- 캘린더 읽기/쓰기가 필요하면 `google_calendar` MCP 서버를 사용한다.
-- 본인 메시지 검색이 필요하면 `slack` MCP 서버를 사용한다.
-- monday 보드 활동 조회가 필요하면 `monday` MCP 서버를 사용한다.
-- 가용한 서버가 없으면 추측하지 말고 누락을 보고에 명시한다.
+연결된 커넥터는 OpenAI 큐레이티드 플러그인(google-calendar / slack / monday-com)으로
+제공된다. 도구 이름은 환경에 따라 다를 수 있으므로 능력(capability) 기준으로 판단한다.
+
+- 캘린더 읽기/쓰기가 필요하면 Google Calendar 커넥터를 사용한다.
+- 본인 메시지 검색이 필요하면 Slack 커넥터를 사용한다.
+- monday 보드 활동 조회가 필요하면 monday.com 커넥터를 사용한다.
+  - **sprint/dev 전용 도구로 끝내지 말 것.** 본인 활동은 `user context`로 본인 monday
+    user를 먼저 식별한 뒤, 각 보드의 `board activity` 로그와 `updates`를 대상 일자로 조회해
+    작성자가 본인인 항목만 추린다. (monday user id는 slack_user_id와 다름)
+- 가용한 커넥터가 없으면(미연결/미승인) 추측하지 말고 누락을 보고에 명시한다.
 
 ## 불변 규칙 (상세는 core/prompt.md)
 

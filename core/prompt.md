@@ -80,7 +80,11 @@
 2. **과거 AI 대화**: 대상 일자 범위 대화 검색
    - 대화 제목과 요약으로 활동 성격 추론
 3. **monday.com**: 즐겨찾기 보드의 본인 활동 조회
-   - 각 보드의 activity 로그에서 본인 user_id 필터링
+   - **먼저 본인 monday user를 식별**(user context 조회). monday user id는
+     `slack_user_id`와 **다른 별도 ID**이므로 config 값을 그대로 쓰지 말고 조회로 확정
+   - 각 보드의 **activity 로그**를 대상 일자 범위로 조회 (sprint/dev 전용 도구가 아니라
+     board activity / updates 계열을 사용) → 작성자가 본인인 변경 + 본인이 올린 update만 추림
+   - 자동/시스템이 찍은 변경(user_id가 음수 등)과 캘린더 연동 자동 update는 제외
    - 타임스탬프를 KST(또는 사용자 timezone)로 변환
 
 ### 단계 D. 시간대별 활동 클러스터링
