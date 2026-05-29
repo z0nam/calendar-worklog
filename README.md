@@ -51,7 +51,9 @@ calendar-worklog/
 │   └── claude-code/               # Claude Code (CLAUDE.md + MCP) 셋업 가이드
 ├── docs/
 │   ├── feature-matrix.md          # 트랙별 기능 비교표
-│   └── decision-tree.md           # "나는 어느 트랙으로?" 1페이지 가이드
+│   ├── decision-tree.md           # "나는 어느 트랙으로?" 1페이지 가이드
+│   ├── openai-solution-review.md  # OpenAI 기반 가능 작업/플랜 검토
+│   └── openai-test-scenarios.md   # 무료/Plus 검토 기능 시나리오
 └── examples/                      # (예정)
 ```
 

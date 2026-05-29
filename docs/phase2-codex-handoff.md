@@ -12,7 +12,7 @@ Phase 1(프롬프트 키트 + 4개 트랙 셋업 가이드 + 문서)이 끝났�
 - `core/user-config.example.yaml` — 설정 템플릿 (sensitivity 블록 포함)
 - 트랙 4종 셋업 가이드: `presets/{claude-projects,chatgpt-gpts,codex,claude-code}/`
 - `docs/feature-matrix.md`, `docs/decision-tree.md`
-- 검증: Claude 트랙은 실데이터(5/21)로 체크리스트 6/6 통과 확인됨
+- 검증: Claude 트랙 실데이터(5/21) 체크리스트 6/6 통과. **Codex 트랙 end-to-end 검증 완료(5/29)** — 캘린더 읽기/쓰기 풀사이클·Slack 본인 메시지 검색·monday board activity 추출까지 실데이터 동작 확인
 
 ## 핵심 원칙 (유지할 것)
 
@@ -25,10 +25,13 @@ Phase 1(프롬프트 키트 + 4개 트랙 셋업 가이드 + 문서)이 끝났�
 
 ## 남은 작업 (Phase 2)
 
-1. **monday URL 자동 description 보강** (prompt.md 워크플로 3 구체화)
-   - 캘린더 이벤트 description의 monday item URL → 현재 상태/담당자/Time Tracking 조회 후 보강
-2. **monday Time Tracking 일괄 동기화** (코드 트랙)
-   - 캘린더 업무 블록 ↔ monday Time Tracking 컬럼 동기화 스크립트
+1. **monday URL 자동 description 보강** (prompt.md 워크플로 4 구체화)
+   - 캘린더 이벤트 description의 monday item URL → 현재 상태/담당자/실행 타임라인·실행 업무시간 산정 상태 조회 후 보강
+   - 이미 외부 앱이 캘린더의 monday item URL을 기준으로 monday 실행 타임라인과 실행 업무시간을 산정하고 있으므로, 별도 Time Tracking 동기화 스크립트는 만들지 않음
+2. **캘린더-monday 중복 전제 반영**
+   - 캘린더 업무 블록과 monday item은 겹칠 수 있음
+   - description에 monday URL이 있는 캘린더 이벤트는 monday 연동 대상으로 보고, URL이 없는 일반 업무는 monday에 없는 업무일 수 있음을 허용
+   - 자동 정리 시 monday에 억지로 신규 item을 만들거나 URL 없는 일반 업무를 monday 시간으로 산정하지 않음
 3. **매일 아침 자동 실행**
    - GitHub Actions 또는 local cron으로 "어제 정리" 자동화
    - 단, prompt.md의 확인 게이트와 충돌 → 자동 모드에선 계획을 초안으로 만들고
@@ -42,5 +45,7 @@ Phase 1(프롬프트 키트 + 4개 트랙 셋업 가이드 + 문서)이 끝났�
 
 ## Codex로 작업 시작
 
-`presets/codex/README.md` 참고 — `~/.codex/config.toml`에 MCP 서버 등록,
-`AGENTS.md` 배치 후 진행. 쓰기 작업은 `default_tools_approval_mode = "prompt"` 권장.
+`presets/codex/README.md` 참고. Codex 데스크톱 앱은 OpenAI **큐레이티드 플러그인
+커넥터**(google-calendar / slack / monday-com)를 토글·OAuth 연결하는 방식이라
+npx 서드파티 MCP는 불필요(2026-05-29 검증). `AGENTS.md`(+ `core/prompt.md`,
+`user-config.yaml`)를 작업 디렉토리에 두고 진행. 쓰기는 도구 승인 프롬프트로 2차 확인됨.
