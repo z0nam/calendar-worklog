@@ -124,6 +124,12 @@ organization:
     - OO연구실
   heads:
     OO연구실: 실장이름
+  # 이메일 정규화 — 명부/monday가 구 도메인을 돌려줄 수 있으면 정본 도메인으로 변환.
+  # (예: 직원이 신·구 도메인에 별개 계정이 있고 monday가 구 도메인 계정에 묶인 경우)
+  # 캘린더 임퍼소네이트/Slack 이메일 검색 전에 정규화. Directory primaryEmail로 검증 권장.
+  email_normalization:
+    canonical_domain: example.re.kr
+    deprecated_domains: [old.example.re.kr]
   # source: inline 일 때만 사용
   # divisions:
   #   - name: OO연구실
