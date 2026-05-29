@@ -173,6 +173,8 @@ reporting:
   format: markdown_table
   columns: [시간, 활동, 캘린더, 상태]
   include_notes: true  # 추정 / 애매한 배정 등 메모 포함
+  # 워크플로5 — 과제는 본인이 PM인 것만 기입. 공동연구원 참여 과제는 제외(중요 행사라도 ⭐ X).
+  pm_only: true
   # 워크플로5 — 내용상 무조건 중요한 이벤트(별도 관리 목록). 중요도 컬럼이 부실해도
   # 아래 키워드가 해당 주 일정에 있으면 ⭐로 마킹.
   important_event_keywords:
