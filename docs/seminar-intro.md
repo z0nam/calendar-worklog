@@ -122,6 +122,127 @@ decision-tree → preset → config → 첫 명령. 한 번 셋업하면 끝.
 5. **`지참 0835`** 돌려서 동작 확인
 6. 막히면 **`namun@ji.re.kr` / Slack DM**
 
+> **본인이 쓰는 AI에 해당하는 슬라이드 한 장만** 따라가시면 됩니다 (아래).
+
+---
+
+## 트랙별 — 무엇이 되고 무엇이 안 되나
+
+| 능력 | 채팅창 (ChatGPT Plus / Claude Pro) | 코드 도구 (Codex / Claude Code) |
+|---|---|---|
+| `지참 0835` / `어제 정리` / 명시 일정 | ✅ | ✅ |
+| 5분 셋업 (드래그·드롭만으로 끝) | ✅ | ❌ (10분+, 터미널 필요) |
+| 비개발자 친화 | ✅ | ❌ (앱/CLI 설치·git 사용) |
+| 매일 아침 자동 실행 (Phase 2 예정) | ❌ | ✅ |
+| 본인 PC 파일·스크립트 다루기 | ❌ | ✅ |
+| AI 과거 대화를 활동 소스로 | ChatGPT ❌ / Claude ✅ | Codex ❌ / Claude Code ✅ |
+
+> 처음 도입은 **채팅창 트랙(A 또는 B)**이 압도적으로 쉽습니다. 매일 자동화나 본격 코드 작업이 필요해지면 그때 C/D로 이동.
+
+---
+
+## A. ChatGPT Plus 채팅창 — 가장 쉬움
+
+> **준비물**: ChatGPT Plus 구독, GitHub username (저장소 접근용)
+
+**1) 데이터 커넥터 연결 (한 번만, 약 2분)**
+- `chatgpt.com` 로그인 → 우측 상단 **⚙️(톱니)** → **설정 → 앱**
+- **Google Calendar / Slack / Monday.com** 각각 클릭 → **Connect** → 구글/슬랙/먼데이 로그인 화면에서 권한 허용
+- monday가 목록에 안 보이면 → 조남운에게 회사 어드민 처리 요청
+
+**2) Project 만들기 (한 번만, 약 3분)**
+- 좌측 메뉴 **프로젝트** → **+ 새 프로젝트** → 이름 적당히 (예: `업무기록`)
+- **Instructions** 칸: `presets/chatgpt-gpts/instructions.md` 내용을 그대로 복사·붙여넣기
+- **Files** 칸: 아래 두 파일을 끌어다 놓기
+  - `core/prompt.md`
+  - 본인이 채운 `core/user-config.yaml`
+
+**3) 동작 확인**
+- 그 프로젝트 안에서 **새 채팅** 열고 `지참 0835` 입력
+- 캘린더(근태)에 `08:30~08:35 지참 08:35` 박혔는지 확인
+- (오늘 안 늦으셨으면 만든 뒤 캘린더에서 직접 삭제)
+- 안 되면 화면 캡쳐와 함께 조남운에게
+
+---
+
+## B. Claude Pro 채팅창 — 가장 쉬움
+
+> **준비물**: Claude Pro/Max 구독, GitHub username
+
+**1) 데이터 커넥터 연결 (한 번만, 약 2분)**
+- `claude.ai` 로그인 → 우측 상단 **⚙️** → **Settings → Connectors**
+- **Google Calendar / Slack / monday.com** 각각 → **Connect** → OAuth 승인
+
+**2) Project 만들기 (한 번만, 약 3분)**
+- 좌측 **Projects** → **New Project** → 이름: `업무기록`
+- **Project knowledge** (오른쪽 패널)에 다음 2개 업로드:
+  - `core/prompt.md`
+  - 본인이 채운 `core/user-config.yaml`
+
+**3) 동작 확인**
+- 그 프로젝트에서 새 채팅 → `지참 0835` 입력
+- 캘린더 확인 (안 늦었으면 만든 뒤 삭제)
+
+---
+
+## C. Codex 사용자 — 데스크톱 앱 (개발자·운영자)
+
+> **준비물**: ChatGPT 유료(구독) 또는 OpenAI API, 터미널 약간 친숙
+
+**1) Codex 데스크톱 앱 설치 & 로그인**
+- OpenAI에서 Codex 데스크톱 앱 다운로드 → 설치 → 로그인
+
+**2) 플러그인 켜기 (한 번만)**
+- 앱 내 플러그인/커넥터 패널에서 다음 ON:
+  - `google-calendar@openai-curated`
+  - `slack@openai-curated`
+  - `monday-com@openai-curated`
+- 각각 OAuth Connect
+
+**3) 저장소 클론 & 설정**
+```bash
+git clone https://github.com/z0nam/calendar-worklog
+cd calendar-worklog
+cp core/user-config.example.yaml core/user-config.yaml
+# 텍스트 에디터로 core/user-config.yaml 본인 값으로 편집
+```
+
+**4) Codex에서 실행**
+- Codex 앱에서 이 디렉토리를 작업 디렉토리로 지정
+- `AGENTS.md` + `core/prompt.md` + `user-config.yaml`이 자동으로 로드됨
+- 채팅에 `지참 0835` → 확인
+
+---
+
+## D. Claude Code 사용자 — CLI (개발자)
+
+> **준비물**: Claude Pro/Max 또는 API key, 터미널
+
+**1) Claude Code 설치**
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+또는 VS Code / JetBrains에 Claude Code 확장 설치
+
+**2) 커넥터 연결 (한 번만)**
+- `claude.ai`에서 Google Calendar / Slack / monday Connect
+  (한 번 설정하면 Claude Code 2.1.46+에 자동 공유됨)
+
+**3) 저장소 클론 & 설정**
+```bash
+git clone https://github.com/z0nam/calendar-worklog
+cd calendar-worklog
+cp core/user-config.example.yaml core/user-config.yaml
+# 본인 값으로 편집
+```
+
+**4) 실행**
+```bash
+claude
+```
+- `CLAUDE.md` + `core/prompt.md` + `user-config.yaml`이 자동 로드
+- `지참 0835` 입력 → 확인
+
 ---
 
 ## Q&A 예상
