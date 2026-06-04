@@ -86,10 +86,12 @@ paginate: true
 
 ---
 
-### 2. GitHub 계정
+### 2. 저장소 접근 (GitHub 계정 불필요)
 
-저장소 Private → 접근하려면 GitHub username 필요
-→ 조남운에게 username 알려주시면 collaborator 추가
+저장소가 **Public** → GitHub 계정 없이 누구나 클론/다운로드 가능
+- 그냥 보기: `https://github.com/z0nam/calendar-worklog`
+- 클론: `git clone https://github.com/z0nam/calendar-worklog`
+- Contribution하실 분만 GitHub 계정 + collaborator (조남운에게 username 전달)
 
 ### 3. 본인 정보 (config로 박는 값)
 
@@ -135,8 +137,9 @@ decision-tree → preset → config → 첫 명령. 한 번 셋업하면 끝.
 
 ## 시작하려면
 
-1. **GitHub username 조남운에게 전달** (Slack DM) → collaborator 추가
-2. 저장소 접근 후 **`docs/decision-tree.md`** 읽고 본인 트랙 정함
+1. **저장소 접근** — Public이라 별도 권한 불필요
+   (`git clone https://github.com/z0nam/calendar-worklog` 또는 zip 다운로드)
+2. **`docs/decision-tree.md`** 읽고 본인 트랙 정함
 3. **`presets/<트랙>/README.md`** 따라 셋업 (5–10분)
 4. **`core/user-config.example.yaml`** 복사 → `user-config.yaml`에 본인 정보
 5. **`지참 0835`** 돌려서 동작 확인
@@ -163,7 +166,7 @@ decision-tree → preset → config → 첫 명령. 한 번 셋업하면 끝.
 
 ## A. ChatGPT Plus 채팅창 — 가장 쉬움
 
-> **준비물**: ChatGPT Plus 구독, GitHub username (저장소 접근용)
+> **준비물**: ChatGPT Plus 구독 (저장소는 Public이라 GitHub 계정 불필요)
 
 **1) 데이터 커넥터 연결 (한 번만, 약 2분)**
 - `chatgpt.com` 로그인 → 우측 상단 **⚙️(톱니)** → **설정 → 앱**
@@ -187,7 +190,7 @@ decision-tree → preset → config → 첫 명령. 한 번 셋업하면 끝.
 
 ## B. Claude Pro 채팅창 — 가장 쉬움
 
-> **준비물**: Claude Pro/Max 구독, GitHub username
+> **준비물**: Claude Pro/Max 구독 (저장소는 Public이라 GitHub 계정 불필요)
 
 **1) 데이터 커넥터 연결 (한 번만, 약 2분)**
 - `claude.ai` 로그인 → 우측 상단 **⚙️** → **Settings → Connectors**
@@ -354,5 +357,5 @@ A. 본인 활동을 사후에 정리해야 하는 PM / 연구원, Time Tracking�
 ## 한 줄 요약
 
 채팅 한 줄로 어제 업무가 시간 단위 캘린더로 정리됨.
-**진입조건: 유료 AI 구독 1종 + GitHub 계정 + 5–10분 셋업.**
+**진입조건: 유료 AI 구독 1종 + 5–10분 셋업.** (저장소는 Public — 별도 권한 불필요)
 JRI 동료용으로 만들었고, 어드민(조남운)이 monday 커넥터 허용·계정 권한 추가까지 처리.
