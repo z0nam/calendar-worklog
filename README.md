@@ -50,6 +50,8 @@ calendar-worklog/
 │   ├── codex/                     # Codex CLI (config.toml + AGENTS.md) 셋업 가이드
 │   └── claude-code/               # Claude Code (CLAUDE.md + MCP) 셋업 가이드
 ├── docs/
+│   ├── onboarding.md              # 동료 사용자용 1페이지 인트로
+│   ├── seminar-intro.md           # 부서 세미나용 발표 자료
 │   ├── feature-matrix.md          # 트랙별 기능 비교표
 │   ├── decision-tree.md           # "나는 어느 트랙으로?" 1페이지 가이드
 │   ├── openai-solution-review.md  # OpenAI 기반 가능 작업/플랜 검토
