@@ -75,6 +75,15 @@ calendars:
     priority: 4
     description: "분류 애매한 공식 일정 (학교 연락, 외부 모임, 스터디)"
 
+# 회사가 전사에 공유한 읽기 전용 캘린더 (예: 전사 공식 일정 캘린더, 사내 행사 캘린더 등).
+# 워크플로 2 단계 B에서 점유 시간표에만 합산하고, 본 어시스턴트는 여기에 이벤트를 만들지 않음.
+# 회사가 공용 계정(예: calendar@회사도메인) primary 캘린더로 운영하면 ID가 그 이메일 그대로 나옴.
+read_only_calendars: []
+  # - id: "calendar@ji.re.kr"
+  #   name: "제주연구원 공식 일정"
+  # - id: "c_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@group.calendar.google.com"
+  #   name: "사내 행사 캘린더"
+
 # 활동 데이터 소스
 data_sources:
   slack:
