@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "calendar-worklog",
+  "description": "제주연구원(JI) 사내 calendar-worklog 플러그인 마켓플레이스",
+  "owner": {
+    "name": "Namun Cho",
+    "email": "namun.cho@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "calendar-worklog-ji",
+      "description": "Slack/monday/AI 활동을 종합해 4종 캘린더(과제/근태/업무/기타)에 사후 업무일지를 자동 기록. /worklog 명령으로 setup/late/day/week/now 디스패치.",
+      "author": {
+        "name": "Namun Cho"
+      },
+      "category": "productivity",
+      "source": "./plugin",
+      "homepage": "https://github.com/z0nam/calendar-worklog"
+    }
+  ]
+}
