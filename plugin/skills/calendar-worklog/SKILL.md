@@ -167,8 +167,17 @@ description: >-
    - 검색식 예: `from:<@USER_ID> on:YYYY-MM-DD`
    - 정렬: 시각순 오름차순
    - 채널/DM 모두 포함
-2. **과거 AI 대화**: 대상 일자 범위 대화 검색
-   - 대화 제목과 요약으로 활동 성격 추론
+2. **과거 AI 세션** *(빈 슬롯의 메인 활동 추정에 핵심)*: 대상 일자 범위 대화 검색
+   - **claude.ai 환경**: `conversation_search` / `recent_chats` 도구 있으면 사용 — 메시지 단위 timestamp 가용
+   - **Claude Code**: `~/.claude/projects/<dir-slug>/<uuid>.jsonl` 파일들을 Bash + Python으로 스캔
+     - 각 jsonl 라인의 `"timestamp"`(ISO8601 UTC)로 대상 일자(KST) 메시지만 필터
+     - `"type": "user"` 메시지만 카운트(어시스턴트 응답 제외)
+     - 디렉토리 슬러그(`-Users-namun-dev-calendar-worklog` → `~/dev/calendar-worklog`)에서 cwd 복원 → 어느 프로젝트 작업이었는지 추정
+     - 시(hour) 단위로 메시지 카운트해서 어느 프로젝트가 그 시간대 메인이었는지 판단
+   - **Codex CLI**: `~/.codex/history.jsonl`(사용자 prompt 전체, `{session_id, ts, text}` 형식, ts는 unix 초) + `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`(각 세션 첫 라인 payload에 cwd) 결합
+     - history.jsonl을 대상 일자 KST 범위 ts로 필터, session_id로 그룹화
+     - sessions 파일에서 매칭 session_id의 cwd 추출
+   - **활용 원칙**: Slack/monday에 안 잡힌 시간대 활동이 AI 세션에 남는 경우가 흔함 — 특히 코드/문서 작업이 메인일 때. 단순 "AI 사용 시간"이 아니라 *그 시간대 실제 업무 컨텍스트*로 취급. 빈 슬롯을 발견하면 반드시 AI 세션부터 확인.
 3. **monday.com**: 즐겨찾기 보드의 본인 활동 조회
    - **먼저 본인 monday user를 식별**(user context 조회). monday user id는
      `slack_user_id`와 **다른 별도 ID**이므로 config 값을 그대로 쓰지 말고 조회로 확정
