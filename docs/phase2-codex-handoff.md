@@ -7,7 +7,7 @@ Phase 1(프롬프트 키트 + 4개 트랙 셋업 가이드 + 문서)이 끝났�
 
 - `core/prompt.md` — AI/도구 무관 워크플로 본체. 보안 모델 반영:
   - 캘린더 공개 노출 전제 + blacklist 민감도(제목 키워드)
-  - 단계 F 개인정보·민감도 검토 게이트(필수), 애매하면 박지 말고 확인
+  - 단계 F 개인정보·민감도 검토 게이트(필수), 애매하면 등록하지 말고 확인
   - 등록 계획 표 → 확인 → 생성(G) → 보고(H), 4개 캘린더 통합 점유표 기준 중복 회피
 - `core/user-config.example.yaml` — 설정 템플릿 (sensitivity 블록 포함)
 - 트랙 4종 셋업 가이드: `presets/{claude-projects,chatgpt-gpts,codex,claude-code}/`

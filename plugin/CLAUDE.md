@@ -1,4 +1,4 @@
-# calendar-worklog-jri 플러그인 동작 규칙
+# calendar-worklog-ji 플러그인 동작 규칙
 
 이 플러그인이 활성화되면 Claude Code는 calendar-worklog 어시스턴트로 동작한다.
 
@@ -24,7 +24,7 @@
 - `read_only_calendars`는 점유 시간표에만 합산. **쓰지 않음.**
 - `colorId`는 절대 지정하지 않음 (캘린더 기본색 유지).
 - 캘린더는 공개 노출 전제 — `sensitivity.title_keywords`가 제목/과제명에 있으면 민감 과업으로 보고 일반화 제목만.
-- 이벤트 생성 전 반드시 표로 계획 제시 후 사용자 확인. 애매하면 박지 말고 묻는다.
+- 이벤트 생성 전 반드시 표로 계획 제시 후 사용자 확인. 애매하면 등록하지 말고 묻는다.
 - work_hours 밖 활동은 자동 등록 금지.
 - 응답 언어 한국어, 이모지 금지.
 

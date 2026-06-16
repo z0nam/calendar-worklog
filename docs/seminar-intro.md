@@ -7,7 +7,7 @@ paginate: true
 # calendar-worklog
 ## 활동 흔적으로 캘린더에 사후 업무일지 자동 기록
 
-조남운 (JRI PM, IT·security)
+조남운 (JI PM, IT·security)
 부서 세미나 — 2026년 6월
 
 ---
@@ -75,7 +75,7 @@ paginate: true
 
 | 트랙 | 적합한 분 | 검증 |
 |---|---|---|
-| **Claude Projects** (Claude Pro/Max) | 비개발 다수 | ✅ JRI 실데이터 |
+| **Claude Projects** (Claude Pro/Max) | 비개발 다수 | ✅ JI 실데이터 |
 | **ChatGPT Plus+** | 비개발 다수 | ✅ |
 | Claude Code / Codex | 코드 도구 사용자 | ✅ |
 
@@ -93,7 +93,7 @@ paginate: true
 - 클론: `git clone https://github.com/z0nam/calendar-worklog`
 - Contribution하실 분만 GitHub 계정 + collaborator (조남운에게 username 전달)
 
-### 3. 본인 정보 (config로 박는 값)
+### 3. 본인 정보 (config에 채울 값)
 
 - 본인 Google Calendar의 4 캘린더 ID (과제 / 근태 / 업무 / 기타)
 - 본인 Slack `user_id` (Slack 프로필 → Copy member ID)
@@ -115,18 +115,18 @@ decision-tree → preset → config → 첫 명령. 한 번 셋업하면 끝.
 ## 보안 모델 — 꼭 알아야 할 것
 
 - **캘린더는 공개 노출 전제** (`calendar.namun.net` 등이 published)
-  → 캘린더에 박히는 제목·설명은 외부 노출된다고 보고 작성
+  → 캘린더에 기록되는 제목·설명은 외부 노출된다고 보고 작성
 - **Blacklist 방식**: 기본은 공개 가능
   → 보안 필요 과업만 제목에 키워드(`[보안]`, `대외비`, `비공개`) 명시
   → 키워드 있으면 캘린더엔 **일반화 제목만** 기재(`[과제] 내부 검토` 등), description 비움
 - monday / Drive / Meet **링크는 OAuth로 접근 통제** → description에 남겨도 무방 (열람 권한자만)
-- 애매하면 캘린더에 박지 말고 **사용자에게 확인 요청**(`확인 필요` 마킹)
+- 애매하면 캘린더에 등록하지 말고 **사용자에게 확인 요청**(`확인 필요` 마킹)
 
 ---
 
 ## 현재 상태 (2026-06-01)
 
-- **Phase 1 동작** — 4 트랙 end-to-end 검증 완료, JRI 실데이터로 동작 확인
+- **Phase 1 동작** — 4 트랙 end-to-end 검증 완료, JI 실데이터로 동작 확인
 - **워크플로 5 — 주간 과제 보고 (원장 보고용)**: 설계 진행 중
   - PM 기준 수집, 실 → 구성원 → 과제 트리 구조 확정
   - 세부 보고서 형식 / 폴백 / 차주 계획 마킹 규칙 등 다듬는 중
@@ -358,4 +358,4 @@ A. 본인 활동을 사후에 정리해야 하는 PM / 연구원, Time Tracking�
 
 채팅 한 줄로 어제 업무가 시간 단위 캘린더로 정리됨.
 **진입조건: 유료 AI 구독 1종 + 5–10분 셋업.** (저장소는 Public — 별도 권한 불필요)
-JRI 동료용으로 만들었고, 어드민(조남운)이 monday 커넥터 허용·계정 권한 추가까지 처리.
+JI 동료용으로 만들었고, 어드민(조남운)이 monday 커넥터 허용·계정 권한 추가까지 처리.

@@ -1,7 +1,7 @@
-# calendar-worklog-jri (Claude Code 플러그인)
+# calendar-worklog-ji (Claude Code 플러그인)
 
-제주연구원(JRI) 내부용. 본인 캘린더 4종(과제/근태/업무/기타)에
-Slack/monday/AI 활동을 종합해 사후 업무일지를 박는다.
+제주연구원(JI) 내부용. 본인 캘린더 4종(과제/근태/업무/기타)에
+Slack/monday/AI 활동을 종합해 사후 업무일지를 기록한다.
 
 ## 무엇이 되나
 
@@ -28,7 +28,7 @@ Slack/monday/AI 활동을 종합해 사후 업무일지를 박는다.
 
 ```
 /plugin marketplace add z0nam/calendar-worklog
-/plugin install calendar-worklog-jri
+/plugin install calendar-worklog-ji
 ```
 
 ### 3. 셋업 마법사 1회 실행

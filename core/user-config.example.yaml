@@ -56,7 +56,7 @@ attendance_rules:
   #   ...
 
 # 회사가 운영하는 캘린더 분류 체계
-# 회사마다 다름. JRI는 4개 캘린더 + priority 순위
+# 회사마다 다름. JI는 4개 캘린더 + priority 순위
 calendars:
   과제:
     id: "c_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@group.calendar.google.com"
