@@ -14,15 +14,28 @@ Slack/monday/AI 활동을 종합해 사후 업무일지를 기록한다.
 
 자유 발화도 OK: `지참 0835`, `어제 정리`, `이번 주 보고` 등.
 
+## 의존성 (requirements)
+
+### 필수 (없으면 동작 자체가 어려움)
+
+| 항목 | 어떻게 | 용도 |
+|---|---|---|
+| **Claude Code** + Pro/Max 구독 | <https://claude.com/code> | 본 플러그인 호스트 |
+| **Google Calendar MCP** | claude.ai 커넥터 토글 (가장 쉬움) 또는 로컬 MCP | 캘린더 읽기/쓰기 |
+| **Slack MCP** | claude.ai 커넥터 또는 `/plugin install slack@claude-plugins-official` | 메시지 검색 |
+| **monday.com MCP** | claude.ai 커넥터 (admin이 워크스페이스 허용 필요) 또는 로컬 MCP | 보드 활동 조회 |
+
+### 권장 (있으면 활동 커버리지 95%→100%)
+
+| 항목 | 어떻게 | 용도 |
+|---|---|---|
+| **`mail` 스킬** (mail-mcp) | 현재 `~/dev/mail-mcp` 로컬 전용. 추후 별도 레포로 분리 예정. | 메일 활동(공식 응대·외부 트래픽) 포함 |
+| **Codex CLI** | `brew install codex` 또는 `npm i -g @openai/codex` | Codex 세션 로그 검색 (`~/.codex/history.jsonl`) |
+| **Bash + Python 3** | macOS/Linux 기본 포함 | Claude Code 세션 로그(`~/.claude/projects/*.jsonl`) 스캔 |
+
 ## 설치 (동료용)
 
-### 1. 사전 준비
-
-- **Claude Code** 설치 + Claude Pro/Max 구독
-- **claude.ai 커넥터** 또는 로컬 MCP로 다음 셋 연결:
-  - Google Calendar (본인 4개 캘린더 + 전사 공식 일정 캘린더에 권한 있어야 함)
-  - Slack
-  - monday.com
+### 1. 위 필수 의존성 먼저 확보 (커넥터 / MCP 토글)
 
 ### 2. 플러그인 설치
 
@@ -37,14 +50,12 @@ Slack/monday/AI 활동을 종합해 사후 업무일지를 기록한다.
 /worklog setup
 ```
 
-마법사가 자동으로 다음을 찾아준다:
-- 본인 Slack ID (이메일로 조회)
-- 본인 캘린더 4종 (이름 매칭)
-- 전사 공식 일정 캘린더 (있으면 자동 등록)
-- monday 즐겨찾기 보드 (진행업무/진행과제/전체 과제리스트/연구자 소속 마스터)
+마법사가:
+- 의존성 점검 (필수/권장 항목 가용 여부 보고)
+- 본인 Slack ID (이메일로 조회) · 캘린더 4종 (이름 매칭) · 전사 공식 일정 캘린더 · monday 즐겨찾기 보드 자동 매칭
+- 수동 입력은 출퇴근 시각 정도
 
-수동으로 답해야 하는 건 출퇴근 시각 정도. 결과는
-`~/.config/calendar-worklog/user-config.yaml`에 저장된다.
+결과: `~/.config/calendar-worklog/user-config.yaml`
 
 ### 4. 시작
 

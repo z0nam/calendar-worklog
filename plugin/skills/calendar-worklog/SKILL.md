@@ -45,6 +45,23 @@ description: >-
 **목적**: 컴맹도 가능한 1회성 설정 생성. 결과 파일은 `~/.config/calendar-worklog/user-config.yaml`.
 
 ### 0-A. 사전 점검
+
+**A-1. 의존성 점검 (plugin.json `dependencies` 기준):**
+
+먼저 다음을 확인해 한 줄짜리 표로 보고. **필수 항목이 빠지면 마법사 중단하고 안내 후 종료.**
+
+| 분류 | 항목 | 점검 방법 |
+|---|---|---|
+| 필수 | Google Calendar MCP | `list_calendars` 호출 가능 여부 |
+| 필수 | Slack MCP | `slack_search_users` 호출 가능 여부 |
+| 필수 | monday.com MCP | `get_user_context` 호출 가능 여부 |
+| 권장 | `mail` 스킬 | `~/.claude/skills/mail/SKILL.md` 존재 여부 |
+| 권장 | Codex CLI | `~/.codex/history.jsonl` 존재 여부 |
+| 권장 | Claude Code 세션 로그 | `~/.claude/projects/` 존재 + Bash/Python 가용 |
+
+권장 항목이 빠지면 해당 소스를 단계 C에서 건너뛰고 보고에 명시.
+
+**A-2. 디렉토리 준비:**
 - `~/.config/calendar-worklog/` 디렉토리 없으면 만든다 (Bash `mkdir -p`).
 - 기존 파일이 있으면 "기존 설정이 있다. 덮어쓸까?"로 확인 후 진행. 백업본 `.bak`으로 보관.
 

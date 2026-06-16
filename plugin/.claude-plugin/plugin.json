@@ -7,5 +7,23 @@
     "url": "https://github.com/z0nam/calendar-worklog"
   },
   "homepage": "https://github.com/z0nam/calendar-worklog",
-  "license": "TBD"
+  "license": "TBD",
+  "dependencies": {
+    "required": {
+      "mcp": [
+        { "name": "google-calendar", "via": "claude.ai connector | local MCP", "purpose": "캘린더 읽기/쓰기" },
+        { "name": "slack",           "via": "claude.ai connector | local MCP", "purpose": "메시지 검색" },
+        { "name": "monday",          "via": "claude.ai connector | local MCP", "purpose": "보드 활동 조회" }
+      ]
+    },
+    "recommended": {
+      "skills": [
+        { "name": "mail", "source": "local: ~/dev/mail-mcp (심볼릭으로 ~/.claude/skills/mail에 연결)", "purpose": "이메일 활동 포함 (95%→100% 커버)" }
+      ],
+      "tools": [
+        { "name": "codex-cli", "install": "brew install codex 또는 npm i -g @openai/codex", "purpose": "~/.codex/history.jsonl 검색" },
+        { "name": "python3 + bash", "install": "macOS/Linux 기본 포함", "purpose": "~/.claude/projects/*.jsonl 스캔" }
+      ]
+    }
+  }
 }
