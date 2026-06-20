@@ -204,10 +204,11 @@ description: >-
    - 타임스탬프를 KST(또는 사용자 timezone)로 변환
 
 4. **메일** *(공식 응대·회의 후속·외부 트래픽 포착에 결정적)*: `mail` 스킬 사용 —
-   하이브리드 백엔드(Gmail → Claude Gmail connector, ji.re.kr/Naver/Kakao 등 → Himalaya CLI,
-   다계정 지원). **회사 메일은 보통 `-a ji` 계정**.
-   - 받은편지함(INBOX) + 보낸편지함(`-f Sent`) 모두 대상 일자로 조회. 예:
-     `himalaya envelope list -a ji -o json -- since 2026-06-16 and before 2026-06-17`
+   `mailskill` 어댑터로 다계정(Gmail connector + IMAP) 통합. 회사 메일은 보통 `ji` 계정.
+   - 계정 목록은 `mailskill accounts`로 확인.
+   - 받은편지함 + 보낸편지함 모두 대상 일자로 조회. 예:
+     `mailskill search ji since 2026-06-16 before 2026-06-17`
+     (Sent 폴더는 `mailskill search ji -f Sent ...`)
    - 추출: 시각, 상대방, 제목. **본문은 description에 옮기지 않음** (DM과 동일 보안 모델).
      주제만 일반화해서 요약.
    - 단발 메일은 인접 블록에 흡수. 외부 응대/공식 회신에 시간 들인 경우(회신 작성 30분+) 별도 블록.

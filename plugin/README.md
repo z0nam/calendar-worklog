@@ -29,7 +29,7 @@ Slack/monday/AI 활동을 종합해 사후 업무일지를 기록한다.
 
 | 항목 | 어떻게 | 용도 |
 |---|---|---|
-| **`mail` 스킬** (mail-mcp) | 현재 `~/dev/mail-mcp` 로컬 전용. 추후 별도 레포로 분리 예정. | 메일 활동(공식 응대·외부 트래픽) 포함 |
+| **`mail` 스킬** | 퍼블릭: <https://github.com/z0nam/mail-skill> · 개인정보 포함 변형: <https://github.com/z0nam/mail-skill-namun>. 클론 후 `ln -s <repo>/.claude/skills/mail ~/.claude/skills/mail` | 메일 활동(공식 응대·외부 트래픽) 포함 |
 | **Codex CLI** | `brew install codex` 또는 `npm i -g @openai/codex` | Codex 세션 로그 검색 (`~/.codex/history.jsonl`) |
 | **Bash + Python 3** | macOS/Linux 기본 포함 | Claude Code 세션 로그(`~/.claude/projects/*.jsonl`) 스캔 |
 
