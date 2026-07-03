@@ -17,6 +17,7 @@
 - **"지참 0835"** → 근태 캘린더에 `08:30~08:35 지참 08:35` 자동 등록
 - **"어제 일정 정리해줘"** → Slack / AI 세션 / monday 활동을 종합해 어제 빈 캘린더 슬롯에 업무 블록을 1시간 단위로 채움. 캘린더 4종(과제/업무/근태/기타)에 자동 배정
 - **"이번 주 정리해줘"** *(예정)* → 주간 단위 사후 기록
+- **"이번 달 직원소통공감회의 자료 정리해줘"** → 매월 과제별 주요 추진사항·특이사항을 monday / Slack / Calendar / 과제 폴더에서 종합해 공유 회의자료 Doc의 본인 섹션 초안 작성. 상세: [docs/monthly-meeting-report.md](./docs/monthly-meeting-report.md)
 
 작동 원리는 사용자별 설정(`user-config.yaml`)과 공통 프롬프트(`core/prompt.md`)를
 AI에 함께 주입하는 방식. AI는 Claude / ChatGPT 어느 쪽이든 OK입니다.
