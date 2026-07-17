@@ -15,3 +15,10 @@ user-config.yaml
 .vscode/
 .idea/
 *.swp
+
+# Python
+__pycache__/
+*.pyc
+
+# 새니타이즈 원본(실제 채널/UID/제외명단 포함) — 로컬 전용
+*.local.md

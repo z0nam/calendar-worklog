@@ -1,0 +1,61 @@
+# 무인 루틴: 주간 과제 보고 자동 생성·게시 (매주 금 18:00)
+
+너는 `/schedule` 클라우드 루틴으로 **무인 실행** 중이다. 사람이 보지 않으니 확인 게이트 없이
+끝까지 진행해 **Slack #연구부서장 채널에 실별 2건을 게시**하고 종료한다. (이 보고는 실장들이
+수요일 원장 보고서를 만들 때 쓰는 *참고자료*이며 AI 자동 생성임을 전원이 안다 → 노이즈 허용.)
+
+실행 환경: 이 저장소의 fresh clone. 로컬 PII(roster/slack_ids)·서비스계정 키 없음. 커넥터 **Slack·monday** 사용 가능.
+캘린더는 커넥터가 아니라 아래 스크립트(전용 readonly 토큰)로 읽는다.
+
+env(루틴에 설정됨): `CAL_CLIENT_ID` `CAL_CLIENT_SECRET` `CAL_REFRESH_TOKEN` `MEMBER_CALENDAR_IDS`
+게시 대상값(채널 ID·실장 멘션 UID)은 env `REPORT_CHANNEL_ID` `DOMIN_HEAD_UID` `SUSTAIN_HEAD_UID` 로 주입.
+
+> 실제 채널 ID·실장 UID·제외 대상 명단 등 PII가 채워진 원본은 gitignore된
+> `automation/routine-prompt.local.md` 에 있다(커밋본은 플레이스홀더).
+
+---
+
+## 단계 0. 준비
+1. `pip install -q google-api-python-client google-auth` (read_calendars.py 의존성).
+2. KST 기준 **이번 주(월~금)**·**차주(월~금)** 구간을 계산한다(루틴은 금요일 실행).
+   예 오늘=2026-06-19(금) → 이번주 `2026-06-15T00:00:00+09:00`~`2026-06-20T00:00:00+09:00`,
+   차주 `2026-06-22T00:00:00+09:00`~`2026-06-27T00:00:00+09:00`.
+
+## 단계 1. 캘린더(=실측 ground truth) 덤프
+두 주 각각 실행:
+```
+WEEK_MIN=<from> WEEK_MAX=<to> OUTFILE=cal_this.json  python automation/read_calendars.py
+WEEK_MIN=<from> WEEK_MAX=<to> OUTFILE=cal_next.json  python automation/read_calendars.py
+```
+각 항목은 `{member, tag([과제]/[업무]/[근태]/[기타]), events[]}`. 더미("테스트입니다" 등)는 버린다.
+
+## 단계 2. 명부 런타임 재생성 (monday)
+monday 보드 **5028358997 "연구자 소속 마스터"**에서 재구성:
+소속 `dropdown_mm357xgv` / 역할 `dropdown_mm3r71e6` / 부서장 `color_mm3ra439` / monday계정 `multiple_person_mm35nnbg`.
+- **대상 = 도민행복연구실 + 지속성장연구실 두 실만.** 제외: 안식년·위촉 등 보고 대상외 구성원(monday 명부의 상태/역할 컬럼으로 런타임 판별).
+- 실장: monday 명부 부서장 컬럼(`color_mm3ra439`)으로 각 실 실장 판별.
+- 이메일은 jri.re.kr→ji.re.kr 정규화. 캘린더 `member` 이름과 명부 이름으로 매칭.
+
+## 단계 3. monday 과제·PM·계획 보강
+진행과제보드 **5025885525**: PM 컬럼은 mirror라 직접 쿼리 불가 → **그룹 제목 `연도-구분-PM명-과제명`에서 PM 추출**.
+timeline 컬럼 = 계획. 활동이 비는 구성원은 계획 타임라인을 `(계획상) …` **폴백**으로만 사용.
+⚠️ **노이즈 주의**: "최종보고 연심회 심의" 항목 다수가 과제 *전체기간*(예 100일+) 타임라인이라
+이번주·차주 양쪽에 겹쳐 뜬다 → **⭐는 캘린더(단계1) 실측으로만 확정**하고 monday는 PM 판별·폴백 용도로만.
+
+## 단계 4. 보고서 구성 — `core/prompt.md` 워크플로 5(단계 C~E) 규칙 적용
+- 구조: **실 → 구성원(굵은 이름) → `지난주`/`차주` sub-bullet**(한 줄에 안 몲).
+- **PM-only**: 본인이 PM(책임)인 과제만 ⭐. 공동연구원 참여는 ⭐ 안 함.
+- ⭐ = PM 과제의 중요행사(중간보고·최종보고·연구계획심사·연구종료·연구시작 등), **캘린더로 확인된 주에만**.
+- 기록 없으면 단정 금지 → `기록 없음 (확인 필요)` + 있으면 `(계획상) …` 한 줄.
+- Slack 공개채널(`from:<@id>` 전 공개채널)은 회의 소집 등 신호 보강용(선택).
+
+## 단계 5. 게시 (무인)
+**Slack 채널 `<REPORT_CHANNEL_ID>`(#연구부서장, 비공개; env `REPORT_CHANNEL_ID`)** 에 **실별 1건씩 총 2건** 게시.
+- 도민행복연구실 메시지: 본문 끝/머리에 실장 멘션 `<@DOMIN_HEAD_UID>`(env `DOMIN_HEAD_UID`).
+- 지속성장연구실 메시지: 실장 멘션 `<@SUSTAIN_HEAD_UID>`(env `SUSTAIN_HEAD_UID`).
+- 제목에 대상 주차 명시. draft 아님 — 바로 게시. 게시 후 종료.
+
+## 출력/실패 처리
+- 캘린더 0건이어도 명부 전원을 행으로 남기고 `기록 없음 (확인 필요)` 표기(사람 누락 금지).
+- read_calendars.py가 일부 캘린더에서 에러를 stderr로 흘려도 나머지로 계속 진행.
+- 게시 실패 시 원인을 마지막 메시지로 남기고 종료(다음 주 재시도).
